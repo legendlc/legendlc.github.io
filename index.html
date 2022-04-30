@@ -175,7 +175,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/04/30/build-my-workspace/" class="post-title-link" itemprop="url">从零开始搭建我的Linux开发环境</a>
+          <a href="/2022/04/30/build-my-workspace/" class="post-title-link" itemprop="url">从零搭建Linux开发环境</a>
         </h2>
 
         <div class="post-meta-container">
@@ -187,7 +187,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2022-04-30 11:06:28 / Modified: 13:15:50" itemprop="dateCreated datePublished" datetime="2022-04-30T11:06:28+08:00">2022-04-30</time>
+      <time title="Created: 2022-04-30 11:06:28 / Modified: 13:22:29" itemprop="dateCreated datePublished" datetime="2022-04-30T11:06:28+08:00">2022-04-30</time>
     </span>
 
   
@@ -221,11 +221,13 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export PATH=&quot;$HOME/.pyenv/bin:$PATH&quot;</span><br><span class="line">eval &quot;$(pyenv init --path)&quot;</span><br><span class="line">eval &quot;$(pyenv virtualenv-init -)&quot;</span><br></pre></td></tr></table></figure>
 
 <p><strong>安装Python：</strong></p>
-<p>首先安装编译Python的依赖：<a target="_blank" rel="noopener" href="https://github.com/pyenv/pyenv/wiki#suggested-build-environment">https://github.com/pyenv/pyenv/wiki#suggested-build-environment</a></p>
+<p>首先安装编译Python的依赖：<a target="_blank" rel="noopener" href="https://github.com/pyenv/pyenv/wiki#suggested-build-environment">pyenv&#x2F;wiki#suggested-build-environment</a></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pyenv install 3.9.0 # 安装所需版本</span><br><span class="line">pyenv global 3.9.0 # 设置全局Python版本</span><br></pre></td></tr></table></figure>
 
 <h2 id="VS-code-远程连接配置"><a href="#VS-code-远程连接配置" class="headerlink" title="VS code 远程连接配置"></a>VS code 远程连接配置</h2><p>在VS code中编辑ssh config, 增加连接信息：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Host xxx.xxx.xxx.xxx</span><br><span class="line">  HostName xxx.xxx.xxx.xxx</span><br><span class="line">  User root</span><br><span class="line">  IdentityFile &quot;&lt;private key file path&gt;&quot;</span><br></pre></td></tr></table></figure>
+
+<p>注：若建立连接失败，提示私钥permission too open，此时需要提高私钥的权限（<a target="_blank" rel="noopener" href="https://www.cnblogs.com/chkhk/p/13414823.html">参考</a>）。</p>
 
       
     </div>
