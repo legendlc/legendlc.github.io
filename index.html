@@ -185,9 +185,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2022-04-30 11:06:28 / Modified: 13:22:29" itemprop="dateCreated datePublished" datetime="2022-04-30T11:06:28+08:00">2022-04-30</time>
+      <time title="Created: 2022-04-30 11:06:28" itemprop="dateCreated datePublished" datetime="2022-04-30T11:06:28+08:00">2022-04-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-05-15 12:32:36" itemprop="dateModified" datetime="2022-05-15T12:32:36+08:00">2022-05-15</time>
     </span>
 
   
@@ -212,10 +218,13 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://pyenv.run | bash</span><br></pre></td></tr></table></figure>
 
 <p>注：如果由于网络原因clone失败，可手动下载安装脚本：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer</span><br><span class="line"></span><br><span class="line">vim pyenv-installer</span><br></pre></td></tr></table></figure>
 
 <p>然后手动将该脚本中的<code>GITHUB</code>变量换成国内github镜像网站（<a target="_blank" rel="noopener" href="https://blog.51cto.com/u_13409958/3669827">参考</a>）：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">https://github.com/pyenv/pyenv-installer/blob/771de8e45459c5c40f148e4473c34a4d2fec7ee5/bin/pyenv-installer<span class="comment">#L43</span></span></span><br><span class="line">GITHUB=&quot;https://github.com&quot; -&gt; GITHUB=&quot;hub.fastgit.xyz​&quot; # 未来可能失效</span><br></pre></td></tr></table></figure>
+
+<p>执行修改后的安装脚本：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh pyenv-installer</span><br></pre></td></tr></table></figure>
 
 <p><strong>将pyenv设置语句加入shell配置文件 ~&#x2F;.zshrc：</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export PATH=&quot;$HOME/.pyenv/bin:$PATH&quot;</span><br><span class="line">eval &quot;$(pyenv init --path)&quot;</span><br><span class="line">eval &quot;$(pyenv virtualenv-init -)&quot;</span><br></pre></td></tr></table></figure>
