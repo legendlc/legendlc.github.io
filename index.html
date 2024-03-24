@@ -198,7 +198,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-03-24 15:55:35" itemprop="dateModified" datetime="2024-03-24T15:55:35+08:00">2024-03-24</time>
+      <time title="Modified: 2024-03-24 16:04:33" itemprop="dateModified" datetime="2024-03-24T16:04:33+08:00">2024-03-24</time>
     </span>
 
   
@@ -212,43 +212,41 @@
     
     <div class="post-body" itemprop="articleBody">
           <!-- toc -->
-
 <ul>
-<li><a href="#%E5%AF%BC%E8%A8%80">导言</a></li>
-<li><a href="#%E6%96%B9%E6%B3%95">方法</a><ul>
-<li><a href="#%E9%A2%84%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE">预训练数据</a></li>
-<li><a href="#%E6%9E%B6%E6%9E%84">架构</a></li>
-<li><a href="#%E4%BC%98%E5%8C%96%E5%99%A8">优化器</a></li>
-<li><a href="#%E9%AB%98%E6%95%88%E7%9A%84%E5%AE%9E%E7%8E%B0">高效的实现</a></li>
+<li><a href="#导言">导言</a></li>
+<li><a href="#方法">方法</a><ul>
+<li><a href="#预训练数据">预训练数据</a></li>
+<li><a href="#架构">架构</a></li>
+<li><a href="#优化器">优化器</a></li>
+<li><a href="#高效的实现">高效的实现</a></li>
 </ul>
 </li>
-<li><a href="#%E4%B8%BB%E8%A6%81%E7%BB%93%E6%9E%9C">主要结果</a><ul>
-<li><a href="#%E5%B8%B8%E8%AF%86%E6%8E%A8%E7%90%86common-sense-reasoning">常识推理（Common Sense Reasoning）</a></li>
-<li><a href="#%E9%97%AD%E5%8D%B7%E9%97%AE%E7%AD%94closed-book-question-answering">闭卷问答（Closed-book Question Answering）</a></li>
-<li><a href="#%E9%98%85%E8%AF%BB%E7%90%86%E8%A7%A3">阅读理解</a></li>
-<li><a href="#%E6%95%B0%E5%AD%A6%E6%8E%A8%E7%90%86">数学推理</a></li>
-<li><a href="#%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90">代码生成</a></li>
+<li><a href="#主要结果">主要结果</a><ul>
+<li><a href="#常识推理common-sense-reasoning">常识推理（Common Sense Reasoning）</a></li>
+<li><a href="#闭卷问答closed-book-question-answering">闭卷问答（Closed-book Question Answering）</a></li>
+<li><a href="#阅读理解">阅读理解</a></li>
+<li><a href="#数学推理">数学推理</a></li>
+<li><a href="#代码生成">代码生成</a></li>
 <li><a href="#mmlu-massive-multitask-language-understanding">MMLU (Massive Multitask Language Understanding)</a></li>
-<li><a href="#%E8%AE%AD%E7%BB%83%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%84%E6%80%A7%E8%83%BD%E5%8F%98%E5%8C%96">训练过程中的性能变化</a></li>
+<li><a href="#训练过程中的性能变化">训练过程中的性能变化</a></li>
 </ul>
 </li>
-<li><a href="#%E6%8C%87%E4%BB%A4%E5%BE%AE%E8%B0%83">指令微调</a></li>
-<li><a href="#%E5%81%8F%E8%A7%81-%E6%AF%92%E6%80%A7%E5%92%8C%E4%B8%8D%E5%AE%9E%E4%BF%A1%E6%81%AFbias-toxicity-and-misinformation">偏见、毒性和不实信息（Bias, Toxicity and Misinformation）</a></li>
-<li><a href="#%E7%A2%B3%E8%B6%B3%E8%BF%B9">碳足迹</a></li>
-<li><a href="#%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C">相关工作</a></li>
-<li><a href="#%E7%BB%93%E8%AE%BA">结论</a></li>
-<li><a href="#%E9%99%84%E5%BD%95">附录</a></li>
+<li><a href="#指令微调">指令微调</a></li>
+<li><a href="#偏见-毒性和不实信息bias-toxicity-and-misinformation">偏见、毒性和不实信息（Bias, Toxicity and Misinformation）</a></li>
+<li><a href="#碳足迹">碳足迹</a></li>
+<li><a href="#相关工作">相关工作</a></li>
+<li><a href="#结论">结论</a></li>
+<li><a href="#附录">附录</a></li>
 </ul>
 <!-- tocstop -->
-
 <hr>
 <p>论文地址：<a target="_blank" rel="noopener" href="https://www.semanticscholar.org/paper/LLaMA%3A-Open-and-Efficient-Foundation-Language-Touvron-Lavril/57e849d0de13ed5f91d086936296721d4ff75a75">LLaMA: Open and Efficient Foundation Language Models | Semantic Scholar</a></p>
 <p>作者都来自Meta AI。</p>
 <p>LLaMA是一系列参数大小从7B到65B不等的基础大模型。LLaMA的训练数据都只来源于公开可获得的数据集，但是在模型性能上达到了当时的业界最佳水平。其中LLaMA-13B超过了175B的GPT-3，LLaMA-65B可以和当时最佳模型Chinchilla-70B (DeepMind) 和PaLM-540B (谷歌) 媲美。</p>
-<p>所有LLaMA模型都被开源发布到社区: <a target="_blank" rel="noopener" href="https://github.com/facebookresearch/llama/tree/llama_v1">facebookresearch&#x2F;llama (github.com)</a>。</p>
+<p>所有LLaMA模型都被开源发布到社区: <a target="_blank" rel="noopener" href="https://github.com/facebookresearch/llama/tree/llama_v1">facebookresearch/llama (github.com)</a>。</p>
 <h2><span id="导言">导言</span></h2><h2><span id="方法">方法</span></h2><p>LLaMA的训练方式与PaLM类似，并且受到了Chinchilla中scaling laws（即模型越大，需要的训练数据也越多）的启发。</p>
 <h3><span id="预训练数据">预训练数据</span></h3><p>LLaMA的训练数据包括1.4 T个tokens，由多个数据源混合组成，如下所示。</p>
-<p><img src="/2024/03/13/llama/image-20240313232548802.png" alt="image-20240313232548802"></p>
+<p><img src="image-20240313232548802.png" alt="image-20240313232548802"></p>
 <blockquote>
 <p><code>Sampling prop.</code>表示采样比例，表示每个数据子集在训练数据中的占比。通过调整不同数据源的采样比例，可以控制模型接触到的数据种类和数量，从而影响模型的学习效果。例如，如果某种类型的数据对模型的训练更有帮助，那么可以增大这部分数据的采样比例，使模型在训练过程中更多地接触到这类数据。</p>
 </blockquote>
@@ -263,7 +261,7 @@
 <h4><span id="swiglu激活函数">SwiGLU激活函数</span></h4><p>原始Transformer使用ReLU作为激活函数，LLaMA模型基于PaLM的实践，采用SwiGLU激活函数来进一步提高模型的性能和效率，使其在各种基准测试中取得更好的结果。</p>
 <blockquote>
 <p>SwiGLU（Switched Gate Linear Unit）激活函数是一种在Transformer架构中用于替代传统ReLU（Rectified Linear Unit）激活函数的非线性函数。SwiGLU激活函数由Shazeer等人在2020年提出，旨在改进模型的性能。</p>
-<p>SwiGLU激活函数的定义如下：$SwiGLU(x)&#x3D;x⋅ReLU(x)$。</p>
+<p>SwiGLU激活函数的定义如下：$SwiGLU(x)=x⋅ReLU(x)$。</p>
 <p>SwiGLU激活函数的主要好处包括：提供了比ReLU更强的非线性，这有助于模型捕捉更复杂的数据模式；计算效率高；使用SwiGLU激活函数的模型在各种自然语言处理任务上都显示出了性能的提升等。</p>
 </blockquote>
 <p>和PaLM不同，LLaMA使用了$4 \frac{2}{3}d$​作为SwiGLU的输入维度。</p>
@@ -364,36 +362,26 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="终端配置"><a href="#终端配置" class="headerlink" title="终端配置"></a>终端配置</h2><h3 id="shell"><a href="#shell" class="headerlink" title="shell"></a>shell</h3><p>install zsh:</p>
+          <h2><span id="终端配置">终端配置</span></h2><h3><span id="shell">shell</span></h3><p>install zsh:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install zsh</span><br></pre></td></tr></table></figure>
-
 <p>install <a target="_blank" rel="noopener" href="https://ohmyz.sh/#install">oh-my-zsh</a>:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh -c &quot;$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&quot;</span><br></pre></td></tr></table></figure>
-
-<h3 id="tmux"><a href="#tmux" class="headerlink" title="tmux"></a>tmux</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install tmux</span><br></pre></td></tr></table></figure>
-
-<h2 id="Python配置"><a href="#Python配置" class="headerlink" title="Python配置"></a>Python配置</h2><h3 id="安装pyenv及其插件"><a href="#安装pyenv及其插件" class="headerlink" title="安装pyenv及其插件"></a>安装pyenv及其插件</h3><p><strong>install <a target="_blank" rel="noopener" href="https://github.com/pyenv/pyenv">pyenv</a> with <a target="_blank" rel="noopener" href="https://github.com/pyenv/pyenv-installer">pyenv-installer</a>:</strong></p>
+<h3><span id="tmux">tmux</span></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install tmux</span><br></pre></td></tr></table></figure>
+<h2><span id="python配置">Python配置</span></h2><h3><span id="安装pyenv及其插件">安装pyenv及其插件</span></h3><p><strong>install <a target="_blank" rel="noopener" href="https://github.com/pyenv/pyenv">pyenv</a> with <a target="_blank" rel="noopener" href="https://github.com/pyenv/pyenv-installer">pyenv-installer</a>:</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://pyenv.run | bash</span><br></pre></td></tr></table></figure>
-
 <p>注：如果由于网络原因clone失败，可手动下载安装脚本：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer</span><br><span class="line"></span><br><span class="line">vim pyenv-installer</span><br></pre></td></tr></table></figure>
-
 <p>然后手动将该脚本中的<code>GITHUB</code>变量换成国内github镜像网站（<a target="_blank" rel="noopener" href="https://blog.51cto.com/u_13409958/3669827">参考</a>）：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">https://github.com/pyenv/pyenv-installer/blob/771de8e45459c5c40f148e4473c34a4d2fec7ee5/bin/pyenv-installer<span class="comment">#L43</span></span></span><br><span class="line">GITHUB=&quot;https://github.com&quot; -&gt; GITHUB=&quot;hub.fastgit.xyz​&quot; # 未来可能失效</span><br></pre></td></tr></table></figure>
-
 <p>执行修改后的安装脚本：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh pyenv-installer</span><br></pre></td></tr></table></figure>
-
-<p><strong>将pyenv设置语句加入shell配置文件 ~&#x2F;.zshrc：</strong></p>
+<p><strong>将pyenv设置语句加入shell配置文件 ~/.zshrc：</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export PATH=&quot;$HOME/.pyenv/bin:$PATH&quot;</span><br><span class="line">eval &quot;$(pyenv init --path)&quot;</span><br><span class="line">eval &quot;$(pyenv virtualenv-init -)&quot;</span><br></pre></td></tr></table></figure>
-
 <p><strong>安装Python：</strong></p>
-<p>首先安装编译Python的依赖：<a target="_blank" rel="noopener" href="https://github.com/pyenv/pyenv/wiki#suggested-build-environment">pyenv&#x2F;wiki#suggested-build-environment</a></p>
+<p>首先安装编译Python的依赖：<a target="_blank" rel="noopener" href="https://github.com/pyenv/pyenv/wiki#suggested-build-environment">pyenv/wiki#suggested-build-environment</a></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pyenv install 3.9.0 # 安装所需版本</span><br><span class="line">pyenv global 3.9.0 # 设置全局Python版本</span><br></pre></td></tr></table></figure>
-
-<h2 id="VS-code-远程连接配置"><a href="#VS-code-远程连接配置" class="headerlink" title="VS code 远程连接配置"></a>VS code 远程连接配置</h2><p>在VS code中编辑ssh config, 增加连接信息：</p>
+<h2><span id="vs-code-远程连接配置">VS code 远程连接配置</span></h2><p>在VS code中编辑ssh config, 增加连接信息：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Host xxx.xxx.xxx.xxx</span><br><span class="line">  HostName xxx.xxx.xxx.xxx</span><br><span class="line">  User root</span><br><span class="line">  IdentityFile &quot;&lt;private key file path&gt;&quot;</span><br></pre></td></tr></table></figure>
-
 <p>注：若建立连接失败，提示私钥permission too open，此时需要提高私钥的权限（<a target="_blank" rel="noopener" href="https://www.cnblogs.com/chkhk/p/13414823.html">参考</a>）。</p>
 
       
@@ -464,17 +452,13 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
+<h2><span id="quick-start">Quick Start</span></h2><h3><span id="create-a-new-post">Create a new post</span></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
+<h3><span id="run-server">Run server</span></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
+<h3><span id="generate-static-files">Generate static files</span></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
+<h3><span id="deploy-to-remote-sites">Deploy to remote sites</span></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 
       
